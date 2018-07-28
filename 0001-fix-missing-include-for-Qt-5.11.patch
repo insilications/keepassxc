@@ -1,0 +1,32 @@
+From bf4ab562711a13394244567d6a8f861606aded55 Mon Sep 17 00:00:00 2001
+From: Markus Rathgeb <maggu2810@gmail.com>
+Date: Wed, 16 May 2018 09:55:14 +0200
+Subject: [PATCH 1/1] fix missing include for Qt 5.11
+
+Qt 5.11 cleanes up the internal headers and so consumers could fail by
+missing includes.
+
+See: https://bugs.gentoo.org/655844
+Signed-off-by: Markus Rathgeb <maggu2810@gmail.com>
+---
+ src/gui/entry/EditEntryWidget.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/gui/entry/EditEntryWidget.cpp b/src/gui/entry/EditEntryWidget.cpp
+index 6fd65c1a..b4cc6eaf 100644
+--- a/src/gui/entry/EditEntryWidget.cpp
++++ b/src/gui/entry/EditEntryWidget.cpp
+@@ -29,9 +29,9 @@
+ #include <QMenu>
+ #include <QSortFilterProxyModel>
+ #include <QTemporaryFile>
+-#include <QMimeData>
+ #include <QEvent>
+ #include <QColorDialog>
++#include <QButtonGroup>
+ 
+ #include "autotype/AutoType.h"
+ #include "core/Config.h"
+-- 
+2.18.0
+
