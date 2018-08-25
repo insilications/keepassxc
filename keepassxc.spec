@@ -4,7 +4,7 @@
 #
 Name     : keepassxc
 Version  : 2.3.3
-Release  : 1
+Release  : 2
 URL      : https://github.com/keepassxreboot/keepassxc/releases/download/2.3.3/keepassxc-2.3.3-src.tar.xz
 Source0  : https://github.com/keepassxreboot/keepassxc/releases/download/2.3.3/keepassxc-2.3.3-src.tar.xz
 Summary  : No detailed summary available
@@ -14,6 +14,7 @@ Requires: keepassxc-bin
 Requires: keepassxc-data
 Requires: keepassxc-license
 Requires: keepassxc-man
+Requires: keepassxc-lib
 BuildRequires : argon2-dev
 BuildRequires : buildreq-cmake
 BuildRequires : git
@@ -22,7 +23,8 @@ BuildRequires : libgcrypt-dev
 BuildRequires : libgpg-error-dev
 BuildRequires : pkg-config
 BuildRequires : qtbase-dev qtbase-extras mesa-dev
-BuildRequires : qttools-dev qttools-extras
+BuildRequires : qttools-dev
+BuildRequires : qtx11extras-dev
 BuildRequires : zlib-dev
 Patch1: 0001-fix-missing-include-for-Qt-5.11.patch
 
@@ -47,6 +49,16 @@ Group: Data
 
 %description data
 data components for the keepassxc package.
+
+
+%package lib
+Summary: lib components for the keepassxc package.
+Group: Libraries
+Requires: keepassxc-data
+Requires: keepassxc-license
+
+%description lib
+lib components for the keepassxc package.
 
 
 %package license
@@ -74,7 +86,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1532761418
+export SOURCE_DATE_EPOCH=1535207943
 mkdir clr-build
 pushd clr-build
 %cmake ..
@@ -89,7 +101,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 LD_LIBRARY_PATH=/usr/lib64 ctest .
 
 %install
-export SOURCE_DATE_EPOCH=1532761418
+export SOURCE_DATE_EPOCH=1535207943
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/keepassxc
 cp COPYING %{buildroot}/usr/share/doc/keepassxc/COPYING
@@ -398,6 +410,10 @@ popd
 /usr/share/keepassxc/wordlists/eff_large.wordlist
 /usr/share/metainfo/org.keepassxc.KeePassXC.appdata.xml
 /usr/share/mime/packages/keepassxc.xml
+
+%files lib
+%defattr(-,root,root,-)
+/usr/lib64/keepassxc/libkeepassx-autotype-xcb.so
 
 %files license
 %defattr(-,root,root,-)
