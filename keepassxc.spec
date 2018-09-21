@@ -4,17 +4,17 @@
 #
 Name     : keepassxc
 Version  : 2.3.4
-Release  : 3
+Release  : 4
 URL      : https://github.com/keepassxreboot/keepassxc/releases/download/2.3.4/keepassxc-2.3.4-src.tar.xz
 Source0  : https://github.com/keepassxreboot/keepassxc/releases/download/2.3.4/keepassxc-2.3.4-src.tar.xz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause BSL-1.0 CC0-1.0 GPL-2.0 GPL-3.0 LGPL-2.1 LGPL-3.0 MIT
 Requires: keepassxc-bin
+Requires: keepassxc-lib
 Requires: keepassxc-data
 Requires: keepassxc-license
 Requires: keepassxc-man
-Requires: keepassxc-lib
 BuildRequires : argon2-dev
 BuildRequires : buildreq-cmake
 BuildRequires : buildreq-kde
@@ -23,7 +23,9 @@ BuildRequires : libX11-dev libICE-dev libSM-dev libXau-dev libXcomposite-dev lib
 BuildRequires : libgcrypt-dev
 BuildRequires : libgpg-error-dev
 BuildRequires : pkg-config
-BuildRequires : qtbase-dev qtbase-extras mesa-dev
+BuildRequires : pkgconfig(libsodium)
+BuildRequires : qtbase-dev mesa-dev
+BuildRequires : qttools-dev
 BuildRequires : qtx11extras-dev
 BuildRequires : zlib-dev
 Patch1: 0001-fix-missing-include-for-Qt-5.11.patch
@@ -35,9 +37,9 @@ Patch1: 0001-fix-missing-include-for-Qt-5.11.patch
 %package bin
 Summary: bin components for the keepassxc package.
 Group: Binaries
-Requires: keepassxc-data
-Requires: keepassxc-license
-Requires: keepassxc-man
+Requires: keepassxc-data = %{version}-%{release}
+Requires: keepassxc-license = %{version}-%{release}
+Requires: keepassxc-man = %{version}-%{release}
 
 %description bin
 bin components for the keepassxc package.
@@ -54,8 +56,8 @@ data components for the keepassxc package.
 %package lib
 Summary: lib components for the keepassxc package.
 Group: Libraries
-Requires: keepassxc-data
-Requires: keepassxc-license
+Requires: keepassxc-data = %{version}-%{release}
+Requires: keepassxc-license = %{version}-%{release}
 
 %description lib
 lib components for the keepassxc package.
@@ -86,10 +88,12 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1535824947
-mkdir clr-build
+export SOURCE_DATE_EPOCH=1537555817
+mkdir -p clr-build
 pushd clr-build
-%cmake ..
+%cmake .. -DWITH_XC_BROWSER=ON \
+-DWITH_XC_NETWORKING=ON \
+-DWITH_XC_SSHAGENT=ON
 make  %{?_smp_mflags}
 popd
 
@@ -101,7 +105,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 LD_LIBRARY_PATH=/usr/lib64 ctest .
 
 %install
-export SOURCE_DATE_EPOCH=1535824947
+export SOURCE_DATE_EPOCH=1537555817
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/keepassxc
 cp COPYING %{buildroot}/usr/share/doc/keepassxc/COPYING
@@ -127,6 +131,7 @@ popd
 %defattr(-,root,root,-)
 /usr/bin/keepassxc
 /usr/bin/keepassxc-cli
+/usr/bin/keepassxc-proxy
 
 %files data
 %defattr(-,root,root,-)
