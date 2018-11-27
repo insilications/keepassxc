@@ -4,17 +4,17 @@
 #
 Name     : keepassxc
 Version  : 2.3.4
-Release  : 4
+Release  : 5
 URL      : https://github.com/keepassxreboot/keepassxc/releases/download/2.3.4/keepassxc-2.3.4-src.tar.xz
 Source0  : https://github.com/keepassxreboot/keepassxc/releases/download/2.3.4/keepassxc-2.3.4-src.tar.xz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause BSL-1.0 CC0-1.0 GPL-2.0 GPL-3.0 LGPL-2.1 LGPL-3.0 MIT
-Requires: keepassxc-bin
-Requires: keepassxc-lib
-Requires: keepassxc-data
-Requires: keepassxc-license
-Requires: keepassxc-man
+Requires: keepassxc-bin = %{version}-%{release}
+Requires: keepassxc-data = %{version}-%{release}
+Requires: keepassxc-lib = %{version}-%{release}
+Requires: keepassxc-license = %{version}-%{release}
+Requires: keepassxc-man = %{version}-%{release}
 BuildRequires : argon2-dev
 BuildRequires : buildreq-cmake
 BuildRequires : buildreq-kde
@@ -88,13 +88,13 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1537555817
+export SOURCE_DATE_EPOCH=1543347278
 mkdir -p clr-build
 pushd clr-build
 %cmake .. -DWITH_XC_BROWSER=ON \
 -DWITH_XC_NETWORKING=ON \
 -DWITH_XC_SSHAGENT=ON
-make  %{?_smp_mflags}
+make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %check
@@ -105,21 +105,21 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 LD_LIBRARY_PATH=/usr/lib64 ctest .
 
 %install
-export SOURCE_DATE_EPOCH=1537555817
+export SOURCE_DATE_EPOCH=1543347278
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/keepassxc
-cp COPYING %{buildroot}/usr/share/doc/keepassxc/COPYING
-cp LICENSE.BOOST-1.0 %{buildroot}/usr/share/doc/keepassxc/LICENSE.BOOST-1.0
-cp LICENSE.BSD %{buildroot}/usr/share/doc/keepassxc/LICENSE.BSD
-cp LICENSE.CC0 %{buildroot}/usr/share/doc/keepassxc/LICENSE.CC0
-cp LICENSE.GPL-2 %{buildroot}/usr/share/doc/keepassxc/LICENSE.GPL-2
-cp LICENSE.GPL-3 %{buildroot}/usr/share/doc/keepassxc/LICENSE.GPL-3
-cp LICENSE.LGPL-2.1 %{buildroot}/usr/share/doc/keepassxc/LICENSE.LGPL-2.1
-cp LICENSE.LGPL-3 %{buildroot}/usr/share/doc/keepassxc/LICENSE.LGPL-3
-cp LICENSE.MIT %{buildroot}/usr/share/doc/keepassxc/LICENSE.MIT
-cp LICENSE.NOKIA-LGPL-EXCEPTION %{buildroot}/usr/share/doc/keepassxc/LICENSE.NOKIA-LGPL-EXCEPTION
-cp src/http/qhttp/LICENSE %{buildroot}/usr/share/doc/keepassxc/src_http_qhttp_LICENSE
-cp src/http/qhttp/http-parser/LICENSE-MIT %{buildroot}/usr/share/doc/keepassxc/src_http_qhttp_http-parser_LICENSE-MIT
+mkdir -p %{buildroot}/usr/share/package-licenses/keepassxc
+cp COPYING %{buildroot}/usr/share/package-licenses/keepassxc/COPYING
+cp LICENSE.BOOST-1.0 %{buildroot}/usr/share/package-licenses/keepassxc/LICENSE.BOOST-1.0
+cp LICENSE.BSD %{buildroot}/usr/share/package-licenses/keepassxc/LICENSE.BSD
+cp LICENSE.CC0 %{buildroot}/usr/share/package-licenses/keepassxc/LICENSE.CC0
+cp LICENSE.GPL-2 %{buildroot}/usr/share/package-licenses/keepassxc/LICENSE.GPL-2
+cp LICENSE.GPL-3 %{buildroot}/usr/share/package-licenses/keepassxc/LICENSE.GPL-3
+cp LICENSE.LGPL-2.1 %{buildroot}/usr/share/package-licenses/keepassxc/LICENSE.LGPL-2.1
+cp LICENSE.LGPL-3 %{buildroot}/usr/share/package-licenses/keepassxc/LICENSE.LGPL-3
+cp LICENSE.MIT %{buildroot}/usr/share/package-licenses/keepassxc/LICENSE.MIT
+cp LICENSE.NOKIA-LGPL-EXCEPTION %{buildroot}/usr/share/package-licenses/keepassxc/LICENSE.NOKIA-LGPL-EXCEPTION
+cp src/http/qhttp/LICENSE %{buildroot}/usr/share/package-licenses/keepassxc/src_http_qhttp_LICENSE
+cp src/http/qhttp/http-parser/LICENSE-MIT %{buildroot}/usr/share/package-licenses/keepassxc/src_http_qhttp_http-parser_LICENSE-MIT
 pushd clr-build
 %make_install
 popd
@@ -415,27 +415,27 @@ popd
 /usr/share/keepassxc/translations/keepassx_zh_TW.qm
 /usr/share/keepassxc/wordlists/eff_large.wordlist
 /usr/share/metainfo/org.keepassxc.KeePassXC.appdata.xml
-/usr/share/mime/packages/keepassxc.xml
+/usr/share/mime-packages/keepassxc.xml
 
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/keepassxc/libkeepassx-autotype-xcb.so
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/keepassxc/COPYING
-/usr/share/doc/keepassxc/LICENSE.BOOST-1.0
-/usr/share/doc/keepassxc/LICENSE.BSD
-/usr/share/doc/keepassxc/LICENSE.CC0
-/usr/share/doc/keepassxc/LICENSE.GPL-2
-/usr/share/doc/keepassxc/LICENSE.GPL-3
-/usr/share/doc/keepassxc/LICENSE.LGPL-2.1
-/usr/share/doc/keepassxc/LICENSE.LGPL-3
-/usr/share/doc/keepassxc/LICENSE.MIT
-/usr/share/doc/keepassxc/LICENSE.NOKIA-LGPL-EXCEPTION
-/usr/share/doc/keepassxc/src_http_qhttp_LICENSE
-/usr/share/doc/keepassxc/src_http_qhttp_http-parser_LICENSE-MIT
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/keepassxc/COPYING
+/usr/share/package-licenses/keepassxc/LICENSE.BOOST-1.0
+/usr/share/package-licenses/keepassxc/LICENSE.BSD
+/usr/share/package-licenses/keepassxc/LICENSE.CC0
+/usr/share/package-licenses/keepassxc/LICENSE.GPL-2
+/usr/share/package-licenses/keepassxc/LICENSE.GPL-3
+/usr/share/package-licenses/keepassxc/LICENSE.LGPL-2.1
+/usr/share/package-licenses/keepassxc/LICENSE.LGPL-3
+/usr/share/package-licenses/keepassxc/LICENSE.MIT
+/usr/share/package-licenses/keepassxc/LICENSE.NOKIA-LGPL-EXCEPTION
+/usr/share/package-licenses/keepassxc/src_http_qhttp_LICENSE
+/usr/share/package-licenses/keepassxc/src_http_qhttp_http-parser_LICENSE-MIT
 
 %files man
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 /usr/share/man/man1/keepassxc-cli.1
