@@ -4,7 +4,7 @@
 #
 Name     : keepassxc
 Version  : 2.3.4
-Release  : 5
+Release  : 6
 URL      : https://github.com/keepassxreboot/keepassxc/releases/download/2.3.4/keepassxc-2.3.4-src.tar.xz
 Source0  : https://github.com/keepassxreboot/keepassxc/releases/download/2.3.4/keepassxc-2.3.4-src.tar.xz
 Summary  : No detailed summary available
