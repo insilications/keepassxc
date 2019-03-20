@@ -13,6 +13,7 @@ libc.so.6
 libgcrypt.so.20
 libm.so.6
 libqrencode.so.4
+libquazip5.so.1
 libsodium.so.23
 libstdc++.so.6
 libz.so.1

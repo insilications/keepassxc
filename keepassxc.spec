@@ -6,7 +6,7 @@
 #
 Name     : keepassxc
 Version  : 2.4.0
-Release  : 8
+Release  : 9
 URL      : https://github.com/keepassxreboot/keepassxc/releases/download/2.4.0/keepassxc-2.4.0-src.tar.xz
 Source0  : https://github.com/keepassxreboot/keepassxc/releases/download/2.4.0/keepassxc-2.4.0-src.tar.xz
 Source99 : https://github.com/keepassxreboot/keepassxc/releases/download/2.4.0/keepassxc-2.4.0-src.tar.xz.sig
@@ -30,6 +30,7 @@ BuildRequires : qrencode-dev
 BuildRequires : qtbase-dev mesa-dev
 BuildRequires : qttools-dev
 BuildRequires : qtx11extras-dev
+BuildRequires : quazip-dev
 BuildRequires : zlib-dev
 Patch1: fix-build.patch
 
@@ -90,14 +91,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1553106269
+export SOURCE_DATE_EPOCH=1553119921
 mkdir -p clr-build
 pushd clr-build
 export LDFLAGS="${LDFLAGS} -fno-lto"
 %cmake .. -DWITH_XC_BROWSER=ON \
 -DWITH_XC_NETWORKING=ON \
 -DWITH_XC_SSHAGENT=ON \
--DWITH_XC_KEESHARE=OFF
+-DWITH_XC_KEESHARE=ON \
+-DWITH_XC_KEESHARE_SECURE=ON
 make  %{?_smp_mflags} VERBOSE=1
 popd
 
@@ -109,7 +111,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 LD_LIBRARY_PATH=/usr/lib64 ctest .
 
 %install
-export SOURCE_DATE_EPOCH=1553106269
+export SOURCE_DATE_EPOCH=1553119921
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/keepassxc
 cp LICENSE.BOOST-1.0 %{buildroot}/usr/share/package-licenses/keepassxc/LICENSE.BOOST-1.0
