@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xB7A66F03B59076A8 (release@keepassxc.org)
 #
 Name     : keepassxc
-Version  : 2.4.0
-Release  : 9
-URL      : https://github.com/keepassxreboot/keepassxc/releases/download/2.4.0/keepassxc-2.4.0-src.tar.xz
-Source0  : https://github.com/keepassxreboot/keepassxc/releases/download/2.4.0/keepassxc-2.4.0-src.tar.xz
-Source99 : https://github.com/keepassxreboot/keepassxc/releases/download/2.4.0/keepassxc-2.4.0-src.tar.xz.sig
+Version  : 2.4.1
+Release  : 10
+URL      : https://github.com/keepassxreboot/keepassxc/releases/download/2.4.1/keepassxc-2.4.1-src.tar.xz
+Source0  : https://github.com/keepassxreboot/keepassxc/releases/download/2.4.1/keepassxc-2.4.1-src.tar.xz
+Source99 : https://github.com/keepassxreboot/keepassxc/releases/download/2.4.1/keepassxc-2.4.1-src.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause BSL-1.0 CC0-1.0 GPL-2.0 GPL-3.0 LGPL-2.1 LGPL-3.0 MIT
@@ -28,11 +28,8 @@ BuildRequires : pkg-config
 BuildRequires : pkgconfig(libsodium)
 BuildRequires : qrencode-dev
 BuildRequires : qtbase-dev mesa-dev
-BuildRequires : qttools-dev
-BuildRequires : qtx11extras-dev
 BuildRequires : quazip-dev
 BuildRequires : zlib-dev
-Patch1: fix-build.patch
 
 %description
 # <img src="https://keepassxc.org/logo.png" width="40" height="40"/> KeePassXC
@@ -83,15 +80,14 @@ man components for the keepassxc package.
 
 
 %prep
-%setup -q -n keepassxc-2.4.0
-%patch1 -p1
+%setup -q -n keepassxc-2.4.1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1553119921
+export SOURCE_DATE_EPOCH=1555349340
 mkdir -p clr-build
 pushd clr-build
 export LDFLAGS="${LDFLAGS} -fno-lto"
@@ -111,7 +107,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 LD_LIBRARY_PATH=/usr/lib64 ctest .
 
 %install
-export SOURCE_DATE_EPOCH=1553119921
+export SOURCE_DATE_EPOCH=1555349340
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/keepassxc
 cp LICENSE.BOOST-1.0 %{buildroot}/usr/share/package-licenses/keepassxc/LICENSE.BOOST-1.0
