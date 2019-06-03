@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xB7A66F03B59076A8 (release@keepassxc.org)
 #
 Name     : keepassxc
-Version  : 2.4.1
-Release  : 10
-URL      : https://github.com/keepassxreboot/keepassxc/releases/download/2.4.1/keepassxc-2.4.1-src.tar.xz
-Source0  : https://github.com/keepassxreboot/keepassxc/releases/download/2.4.1/keepassxc-2.4.1-src.tar.xz
-Source99 : https://github.com/keepassxreboot/keepassxc/releases/download/2.4.1/keepassxc-2.4.1-src.tar.xz.sig
+Version  : 2.4.2
+Release  : 11
+URL      : https://github.com/keepassxreboot/keepassxc/releases/download/2.4.2/keepassxc-2.4.2-src.tar.xz
+Source0  : https://github.com/keepassxreboot/keepassxc/releases/download/2.4.2/keepassxc-2.4.2-src.tar.xz
+Source99 : https://github.com/keepassxreboot/keepassxc/releases/download/2.4.2/keepassxc-2.4.2-src.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause BSL-1.0 CC0-1.0 GPL-2.0 GPL-3.0 LGPL-2.1 LGPL-3.0 MIT
@@ -28,6 +28,8 @@ BuildRequires : pkg-config
 BuildRequires : pkgconfig(libsodium)
 BuildRequires : qrencode-dev
 BuildRequires : qtbase-dev mesa-dev
+BuildRequires : qttools-dev
+BuildRequires : qtx11extras-dev
 BuildRequires : quazip-dev
 BuildRequires : zlib-dev
 
@@ -80,17 +82,21 @@ man components for the keepassxc package.
 
 
 %prep
-%setup -q -n keepassxc-2.4.1
+%setup -q -n keepassxc-2.4.2
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1555349340
+export SOURCE_DATE_EPOCH=1559578722
 mkdir -p clr-build
 pushd clr-build
-export LDFLAGS="${LDFLAGS} -fno-lto"
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 %cmake .. -DWITH_XC_BROWSER=ON \
 -DWITH_XC_NETWORKING=ON \
 -DWITH_XC_SSHAGENT=ON \
@@ -107,7 +113,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 LD_LIBRARY_PATH=/usr/lib64 ctest .
 
 %install
-export SOURCE_DATE_EPOCH=1555349340
+export SOURCE_DATE_EPOCH=1559578722
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/keepassxc
 cp LICENSE.BOOST-1.0 %{buildroot}/usr/share/package-licenses/keepassxc/LICENSE.BOOST-1.0
