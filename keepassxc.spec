@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xB7A66F03B59076A8 (release@keepassxc.org)
 #
 Name     : keepassxc
-Version  : 2.4.3
-Release  : 12
-URL      : https://github.com/keepassxreboot/keepassxc/releases/download/2.4.3/keepassxc-2.4.3-src.tar.xz
-Source0  : https://github.com/keepassxreboot/keepassxc/releases/download/2.4.3/keepassxc-2.4.3-src.tar.xz
-Source99 : https://github.com/keepassxreboot/keepassxc/releases/download/2.4.3/keepassxc-2.4.3-src.tar.xz.sig
+Version  : 2.5.0
+Release  : 13
+URL      : https://github.com/keepassxreboot/keepassxc/releases/download/2.5.0/keepassxc-2.5.0-src.tar.xz
+Source0  : https://github.com/keepassxreboot/keepassxc/releases/download/2.5.0/keepassxc-2.5.0-src.tar.xz
+Source1 : https://github.com/keepassxreboot/keepassxc/releases/download/2.5.0/keepassxc-2.5.0-src.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause BSL-1.0 CC0-1.0 GPL-2.0 GPL-3.0 LGPL-2.1 LGPL-3.0 MIT
@@ -80,14 +80,14 @@ man components for the keepassxc package.
 
 
 %prep
-%setup -q -n keepassxc-2.4.3
+%setup -q -n keepassxc-2.5.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1560976310
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1572281037
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -100,29 +100,29 @@ export CXXFLAGS="$CXXFLAGS -fno-lto "
 -DWITH_XC_SSHAGENT=ON \
 -DWITH_XC_KEESHARE=ON \
 -DWITH_XC_KEESHARE_SECURE=ON
-make  %{?_smp_mflags} VERBOSE=1
+make  %{?_smp_mflags}  VERBOSE=1
 popd
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 LD_LIBRARY_PATH=/usr/lib64 ctest .
 
 %install
-export SOURCE_DATE_EPOCH=1560976310
+export SOURCE_DATE_EPOCH=1572281037
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/keepassxc
-cp LICENSE.BOOST-1.0 %{buildroot}/usr/share/package-licenses/keepassxc/LICENSE.BOOST-1.0
-cp LICENSE.BSD %{buildroot}/usr/share/package-licenses/keepassxc/LICENSE.BSD
-cp LICENSE.CC0 %{buildroot}/usr/share/package-licenses/keepassxc/LICENSE.CC0
-cp LICENSE.GPL-2 %{buildroot}/usr/share/package-licenses/keepassxc/LICENSE.GPL-2
-cp LICENSE.GPL-3 %{buildroot}/usr/share/package-licenses/keepassxc/LICENSE.GPL-3
-cp LICENSE.LGPL-2.1 %{buildroot}/usr/share/package-licenses/keepassxc/LICENSE.LGPL-2.1
-cp LICENSE.LGPL-3 %{buildroot}/usr/share/package-licenses/keepassxc/LICENSE.LGPL-3
-cp LICENSE.MIT %{buildroot}/usr/share/package-licenses/keepassxc/LICENSE.MIT
-cp LICENSE.NOKIA-LGPL-EXCEPTION %{buildroot}/usr/share/package-licenses/keepassxc/LICENSE.NOKIA-LGPL-EXCEPTION
+cp %{_builddir}/keepassxc-2.5.0/LICENSE.BOOST-1.0 %{buildroot}/usr/share/package-licenses/keepassxc/3cba29011be2b9d59f6204d6fa0a386b1b2dbd90
+cp %{_builddir}/keepassxc-2.5.0/LICENSE.BSD %{buildroot}/usr/share/package-licenses/keepassxc/b550c747927caf17f4a96cb188467315e5f0ca8a
+cp %{_builddir}/keepassxc-2.5.0/LICENSE.CC0 %{buildroot}/usr/share/package-licenses/keepassxc/a6d187f326922e8d9bcc1ce585e92fa8d1700c4e
+cp %{_builddir}/keepassxc-2.5.0/LICENSE.GPL-2 %{buildroot}/usr/share/package-licenses/keepassxc/06877624ea5c77efe3b7e39b0f909eda6e25a4ec
+cp %{_builddir}/keepassxc-2.5.0/LICENSE.GPL-3 %{buildroot}/usr/share/package-licenses/keepassxc/842745cb706f8f2126506f544492f7a80dbe29b3
+cp %{_builddir}/keepassxc-2.5.0/LICENSE.LGPL-2.1 %{buildroot}/usr/share/package-licenses/keepassxc/3704f4680301a60004b20f94e0b5b8c7ff1484a9
+cp %{_builddir}/keepassxc-2.5.0/LICENSE.LGPL-3 %{buildroot}/usr/share/package-licenses/keepassxc/f45ee1c765646813b442ca58de72e20a64a7ddba
+cp %{_builddir}/keepassxc-2.5.0/LICENSE.MIT %{buildroot}/usr/share/package-licenses/keepassxc/6f86c7f33294f02ab56862165f378421999f1840
+cp %{_builddir}/keepassxc-2.5.0/LICENSE.NOKIA-LGPL-EXCEPTION %{buildroot}/usr/share/package-licenses/keepassxc/17848d7714522f96d68e99d87509c582e2244c50
 pushd clr-build
 %make_install
 popd
@@ -177,6 +177,8 @@ popd
 /usr/share/icons/hicolor/scalable/apps/keepassxc-unlocked.svg
 /usr/share/icons/hicolor/scalable/apps/keepassxc.svg
 /usr/share/icons/hicolor/scalable/mimetypes/application-x-keepassxc.svg
+/usr/share/keepassxc/docs/KeePassXC_GettingStarted.pdf
+/usr/share/keepassxc/docs/KeePassXC_UserGuide.pdf
 /usr/share/keepassxc/icons/application/128x128/apps/keepassxc-dark.png
 /usr/share/keepassxc/icons/application/128x128/apps/keepassxc-locked.png
 /usr/share/keepassxc/icons/application/128x128/apps/keepassxc-unlocked.png
@@ -187,9 +189,9 @@ popd
 /usr/share/keepassxc/icons/application/16x16/actions/auto-type.png
 /usr/share/keepassxc/icons/application/16x16/actions/configure.png
 /usr/share/keepassxc/icons/application/16x16/actions/database-change-key.png
+/usr/share/keepassxc/icons/application/16x16/actions/database-lock.png
 /usr/share/keepassxc/icons/application/16x16/actions/document-close.png
 /usr/share/keepassxc/icons/application/16x16/actions/document-edit.png
-/usr/share/keepassxc/icons/application/16x16/actions/document-encrypt.png
 /usr/share/keepassxc/icons/application/16x16/actions/document-new.png
 /usr/share/keepassxc/icons/application/16x16/actions/document-open.png
 /usr/share/keepassxc/icons/application/16x16/actions/document-save-as.png
@@ -225,9 +227,9 @@ popd
 /usr/share/keepassxc/icons/application/22x22/actions/auto-type.png
 /usr/share/keepassxc/icons/application/22x22/actions/chronometer.png
 /usr/share/keepassxc/icons/application/22x22/actions/database-change-key.png
+/usr/share/keepassxc/icons/application/22x22/actions/database-lock.png
 /usr/share/keepassxc/icons/application/22x22/actions/dialog-close.png
 /usr/share/keepassxc/icons/application/22x22/actions/dialog-ok.png
-/usr/share/keepassxc/icons/application/22x22/actions/document-encrypt.png
 /usr/share/keepassxc/icons/application/22x22/actions/document-new.png
 /usr/share/keepassxc/icons/application/22x22/actions/document-open.png
 /usr/share/keepassxc/icons/application/22x22/actions/document-save.png
@@ -264,11 +266,11 @@ popd
 /usr/share/keepassxc/icons/application/32x32/actions/chronometer.png
 /usr/share/keepassxc/icons/application/32x32/actions/configure.png
 /usr/share/keepassxc/icons/application/32x32/actions/database-change-key.png
+/usr/share/keepassxc/icons/application/32x32/actions/database-lock.png
 /usr/share/keepassxc/icons/application/32x32/actions/dialog-close.png
 /usr/share/keepassxc/icons/application/32x32/actions/dialog-ok.png
 /usr/share/keepassxc/icons/application/32x32/actions/document-close.png
 /usr/share/keepassxc/icons/application/32x32/actions/document-edit.png
-/usr/share/keepassxc/icons/application/32x32/actions/document-encrypt.png
 /usr/share/keepassxc/icons/application/32x32/actions/document-new.png
 /usr/share/keepassxc/icons/application/32x32/actions/document-open.png
 /usr/share/keepassxc/icons/application/32x32/actions/document-properties.png
@@ -289,6 +291,7 @@ popd
 /usr/share/keepassxc/icons/application/32x32/actions/password-generator.png
 /usr/share/keepassxc/icons/application/32x32/actions/password-show-off.png
 /usr/share/keepassxc/icons/application/32x32/actions/password-show-on.png
+/usr/share/keepassxc/icons/application/32x32/actions/statistics.png
 /usr/share/keepassxc/icons/application/32x32/actions/system-help.png
 /usr/share/keepassxc/icons/application/32x32/actions/system-search.png
 /usr/share/keepassxc/icons/application/32x32/actions/url-copy.png
@@ -313,6 +316,7 @@ popd
 /usr/share/keepassxc/icons/application/64x64/apps/keepassxc-unlocked.png
 /usr/share/keepassxc/icons/application/64x64/apps/keepassxc.png
 /usr/share/keepassxc/icons/application/64x64/mimetypes/application-x-keepassxc.png
+/usr/share/keepassxc/icons/application/scalable/apps/freedesktop.svg
 /usr/share/keepassxc/icons/application/scalable/apps/keepassxc-dark.svg
 /usr/share/keepassxc/icons/application/scalable/apps/keepassxc-locked.svg
 /usr/share/keepassxc/icons/application/scalable/apps/keepassxc-unlocked.svg
@@ -440,16 +444,17 @@ popd
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/keepassxc/LICENSE.BOOST-1.0
-/usr/share/package-licenses/keepassxc/LICENSE.BSD
-/usr/share/package-licenses/keepassxc/LICENSE.CC0
-/usr/share/package-licenses/keepassxc/LICENSE.GPL-2
-/usr/share/package-licenses/keepassxc/LICENSE.GPL-3
-/usr/share/package-licenses/keepassxc/LICENSE.LGPL-2.1
-/usr/share/package-licenses/keepassxc/LICENSE.LGPL-3
-/usr/share/package-licenses/keepassxc/LICENSE.MIT
-/usr/share/package-licenses/keepassxc/LICENSE.NOKIA-LGPL-EXCEPTION
+/usr/share/package-licenses/keepassxc/06877624ea5c77efe3b7e39b0f909eda6e25a4ec
+/usr/share/package-licenses/keepassxc/17848d7714522f96d68e99d87509c582e2244c50
+/usr/share/package-licenses/keepassxc/3704f4680301a60004b20f94e0b5b8c7ff1484a9
+/usr/share/package-licenses/keepassxc/3cba29011be2b9d59f6204d6fa0a386b1b2dbd90
+/usr/share/package-licenses/keepassxc/6f86c7f33294f02ab56862165f378421999f1840
+/usr/share/package-licenses/keepassxc/842745cb706f8f2126506f544492f7a80dbe29b3
+/usr/share/package-licenses/keepassxc/a6d187f326922e8d9bcc1ce585e92fa8d1700c4e
+/usr/share/package-licenses/keepassxc/b550c747927caf17f4a96cb188467315e5f0ca8a
+/usr/share/package-licenses/keepassxc/f45ee1c765646813b442ca58de72e20a64a7ddba
 
 %files man
 %defattr(0644,root,root,0755)
 /usr/share/man/man1/keepassxc-cli.1
+/usr/share/man/man1/keepassxc.1
