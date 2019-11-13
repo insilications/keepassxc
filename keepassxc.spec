@@ -6,7 +6,7 @@
 #
 Name     : keepassxc
 Version  : 2.5.1
-Release  : 14
+Release  : 15
 URL      : https://github.com/keepassxreboot/keepassxc/releases/download/2.5.1/keepassxc-2.5.1-src.tar.xz
 Source0  : https://github.com/keepassxreboot/keepassxc/releases/download/2.5.1/keepassxc-2.5.1-src.tar.xz
 Source1 : https://github.com/keepassxreboot/keepassxc/releases/download/2.5.1/keepassxc-2.5.1-src.tar.xz.sig
@@ -28,6 +28,8 @@ BuildRequires : pkg-config
 BuildRequires : pkgconfig(libsodium)
 BuildRequires : qrencode-dev
 BuildRequires : qtbase-dev mesa-dev
+BuildRequires : qttools-dev
+BuildRequires : qtx11extras-dev
 BuildRequires : quazip-dev
 BuildRequires : zlib-dev
 
@@ -88,7 +90,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1573604661
+export SOURCE_DATE_EPOCH=1573687539
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -100,7 +102,8 @@ export CXXFLAGS="$CXXFLAGS -fno-lto "
 -DWITH_XC_NETWORKING=ON \
 -DWITH_XC_SSHAGENT=ON \
 -DWITH_XC_KEESHARE=ON \
--DWITH_XC_KEESHARE_SECURE=ON
+-DWITH_XC_KEESHARE_SECURE=ON \
+-DWITH_XC_UPDATECHECK=OFF
 make  %{?_smp_mflags}  VERBOSE=1
 popd
 
@@ -112,7 +115,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 LD_LIBRARY_PATH=/usr/lib64 ctest .
 
 %install
-export SOURCE_DATE_EPOCH=1573604661
+export SOURCE_DATE_EPOCH=1573687539
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/keepassxc
 cp %{_builddir}/keepassxc-2.5.1/LICENSE.BOOST-1.0 %{buildroot}/usr/share/package-licenses/keepassxc/3cba29011be2b9d59f6204d6fa0a386b1b2dbd90
